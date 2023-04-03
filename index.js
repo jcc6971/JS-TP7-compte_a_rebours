@@ -8,17 +8,19 @@
 // let seconds = totalSeconds % 60
 
 // Créer un événement à la validation du form pour lancer le compte à rebours
+let seconds;
+let auto;
+function affichage() {
+  let second = seconds % 60;
+  if (second < 10) second = "0" + second;
+  countdownDisplay.innerHTML = Math.floor(seconds / 60) + ":" + second;
+  seconds--;
+  if (seconds < 0) clearInterval(auto);
+}
 
-start.addEventListener("click", (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
-  let seconds = choice.value * 60;
-
-  auto = setInterval(() => {
-    let second = seconds % 60;
-    if (second < 10) second = "0" + second;
-    countdownDisplay.innerHTML = Math.floor(seconds / 60) + ":" + second;
-
-    seconds--;
-    if (seconds < 0) clearInterval(auto);
-  }, 1000);
+  seconds = choice.value * 60;
+  clearInterval(auto);
+  auto = setInterval(affichage, 100);
 });
